@@ -1,26 +1,41 @@
 import tkinter as tk
 
-root = tk.Tk()
-root.title("Геометрические фигуры")
-root.resizable(False, False)
-root.geometry("300x300")
+SIZEX = 1080
+SIZEY = 640
 
-canvas = tk.Canvas(root, width=280, height=280, bg="white")
-canvas.pack(pady=10)
+root = tk.Tk()
+root.title("CubeKnight")
+root.resizable(False, False)
+root.geometry(str(SIZEX)+'x'+str(SIZEY))
+canvas = tk.Canvas(root, width=SIZEX, height=SIZEY, bg="black")
+canvas.pack(pady=0)
+
+def say(text, size, brightness=250): 
+    text_id = canvas.create_text(SIZEX-SIZEX*0.95, SIZEY-SIZEY*0.06, text=text, font=("Times New Roman", size), fill=f'#{brightness:02x}{brightness:02x}{brightness:02x}', anchor="sw")
+    def animate(brightness):
+        canvas.itemconfig(text_id, fill=f'#{brightness:02x}{brightness:02x}{brightness:02x}')
+        brightness -= 2
+        if brightness >= 0:
+            root.after(20, lambda: animate(brightness))    
+    root.after(2000, lambda: animate(brightness))
 
 # Прямоугольник
 canvas.create_rectangle(50, 30, 150, 80, fill="red", outline="black")
-
 # Овал
 canvas.create_oval(50, 100, 150, 150, fill="green", outline="black")
-
 # Линия
 canvas.create_line(50, 180, 150, 230, width=3, fill="blue")
-
 # Многоугольник (треугольник)
 canvas.create_polygon(200, 50, 170, 100, 230, 100, fill="orange", outline="black")
 
+#Анимация
+d = canvas.create_rectangle(50, 50, 100, 100, fill="red")
+def move_figure():
+    canvas.move(d, 2, 0)  
+    root.after(50, move_figure)
+move_figure()
+
 # Текст
-canvas.create_text(150, 250, text="Геометрические фигуры", font=("Arial", 12))
+say('Великий Математик', 65)
 
 root.mainloop()
