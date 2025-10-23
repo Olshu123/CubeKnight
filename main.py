@@ -28,14 +28,18 @@ canvas.create_line(50, 180, 150, 230, width=3, fill="blue")
 # Многоугольник (треугольник)
 canvas.create_polygon(200, 50, 170, 100, 230, 100, fill="orange", outline="black")
 
+
 #Анимация
 d = canvas.create_rectangle(50, 50, 100, 100, fill="red")
-def move_figure():
-    canvas.move(d, 2, 0)  
-    root.after(50, move_figure)
-move_figure()
+
+
+def move_figure_step():
+    canvas.move(d, 8, 8)
+    root.after(8, move_figure_step)
+
+
 
 # Текст
 say('Великий Математик', 65)
-
+move_figure_step()
 root.mainloop()
